@@ -36,7 +36,7 @@
     border: 1px solid black;
   }
 
-  button[type=submit] {
+  button[type=button] {
     width: 100px;
     height:30px;
     border-radius: 10px;

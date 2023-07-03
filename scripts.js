@@ -16,23 +16,7 @@ function addBookToLibrary() {
   let pages = document.getElementById("pages").value;
   let book = Object.create(Book).init(title, author, pages);
   myLibrary.push(book);
-  book.index = myLibrary.indexOf(book, 0);
-  let bookList = document.getElementById("books");
-  let bookItem = document.createElement("div");
-  let readButton = createReadButton();
-  let removeButton = createRemoveButton();
-  bookItem.classList.add("book");
-  bookItem.innerHTML =
-    "<h2>" +
-    title +
-    "</h2><p>Author: " +
-    author +
-    "<br>Pages: " +
-    pages +
-    "</p>";
-  bookItem.appendChild(readButton);
-  bookItem.appendChild(removeButton);
-  bookList.appendChild(bookItem);
+  showBooks(myLibrary);
   form.reset();
 }
 function showForm() {
@@ -47,8 +31,10 @@ function showForm() {
 }
 
 function showBooks(myLibrary) {
-  for (let book in myLibrary) {
-    let bookList = document.getElementById("books");
+  let bookList = document.getElementById("books");
+  bookList.textContent = "";
+  for (let book of myLibrary) {
+    book.index = myLibrary.indexOf(book);
     let bookItem = document.createElement("div");
     let readButton = createReadButton();
     let removeButton = createRemoveButton(book);
@@ -82,7 +68,11 @@ function createRemoveButton(book) {
   removeButton.textContent = "Remove";
   removeButton.classList.add("remove-button");
   removeButton.addEventListener("click", function () {
-    myLibrary.pop(book);
+    myLibrary.splice(book.index, 1);
+
+    showBooks(myLibrary);
   });
   return removeButton;
 }
+
+showBooks(myLibrary);
